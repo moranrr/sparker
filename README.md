@@ -159,7 +159,7 @@ schema | 自定义列的类型,例如：[A String,B String,C Int,D Int] | None
 执行hivesql，从hive表中读取数据，或者保存数据到hive表。
 
 ```
-execute sql."hdfs://gdmp/xxx.sql" as table1;
+execute sql."hdfs://gyuj/xxx.sql" as table1;
 
 execute sql."select clos from hivetable" as table1;
 
@@ -207,7 +207,7 @@ password | 密码 |
 执行scala脚本，用于数据的复杂处理，但是每次只能处理一行，如果要处理多行，可以使用自定义函数。
 
 ```
-execute scala."jsontable" with script="file:///C:\Users\chao.qian1\Desktop\sparker\scala\script.scala"  & ignoreOldColumns=false as newtable;
+execute scala."jsontable" with script="file:///C:\Users\Desktop\sparker\scala\script.scala"  & ignoreOldColumns=false as newtable;
 ```
 
 scala脚本使用参数rowmap:Map[String,Any]，表示一行的数据。返回值为类型Map[String,Any]。
@@ -257,13 +257,13 @@ toMails | 收件人地址，多个用逗号隔开 | 必须
 set spark.es.nodes=10.86.210.23;
 set spark.es.port=9200;
 set spark.es.index.auto.create=true;
-set spark.es.net.http.auth.user=123ff;
-set spark.es.net.http.auth.pass=gjncndjhskjhfjksd; 
+set spark.es.net.http.auth.user=username;
+set spark.es.net.http.auth.pass=password; 
 
-set mailSender="xxx@geely.com";
+set mailSender="xxx@163.com";
 set password="xxxxxx";
-set smtpHost="outlook.geely.com";
-set toMails="Chao.Qian1@geely.com";
+set smtpHost="outlook.163.com";
+set toMails="wafys@163.com";
 ```
 
 以``spark.``或者``hive.``开头的参数会传递给SparkConf,但是job描述文件中的spark参数优先级小于shell脚本的参数。
@@ -340,14 +340,14 @@ set spark.es.index.auto.create=true;
 set spark.es.net.http.auth.user=username;
 set spark.es.net.http.auth.pass=password; 
 
-set mailSender="Chao.Qian1@geely.com";
-set password="Zj20150417!";
-set smtpHost="outlook.geely.com";
-set toMails="Chao.Qian1@geely.com";
+set mailSender="wafys@163.com";
+set password="email password";
+set smtpHost="outlook.163.com";
+set toMails="wafys@163.com";
 
 load json."file:///E:\test"  with isPersist=true   as jsontable;
 
-execute sql."hdfs://gdmp" with filureStrategy="continue";
+execute sql."hdfs://gyuj" with filureStrategy="continue";
 
 execute check."select count(1) from jsontable" < 100 warn;
 
@@ -364,10 +364,10 @@ load json."file:///E:\test"  with isPersist=true   as jsontable;
 execute sql."select A aaa,B bbb,C ccc, D ddd from jsontable" as temptable;
 
 execute jdbcsql."truncate table qm.test1" with driver="ru.yandex.clickhouse.ClickHouseDriver" 
-&url="jdbc:clickhouse://10.190.38.74:8123/qm?connect_timeout=60000&http_connection_timeout=60000" & poolsize =1 &;
+&url="jdbc:clickhouse://192.168.381.4:8123/qm?connect_timeout=60000&http_connection_timeout=60000" & poolsize =1 &;
 
 save temptable as sql."insert into test1(aaa,bbb,ccc,ddd) values(?,?,?,?)" with driver="ru.yandex.clickhouse.ClickHouseDriver" 
-&url="jdbc:clickhouse://10.190.38.74:8123/qm?connect_timeout=60000&http_connection_timeout=60000"
+&url="jdbc:clickhouse://192.168.381.4:8123/qm?connect_timeout=60000&http_connection_timeout=60000"
 poolsize =1 & retry=2;
 ```
 
@@ -414,7 +414,7 @@ set retry=3;
 # 提交脚本示例：
 
 ```
-/usr/hdp/2.6.2.14-5/spark2/bin/spark-submit \
+spark-submit \
 --class com.datatec.sparker.core.StartApp \
 --master yarn \
 --deploy-mode client \
@@ -427,13 +427,13 @@ set retry=3;
 --conf spark.sql.shuffle.partitions=30 \
 --conf spark.storage.memoryFraction=0.5 \
 --conf spark.shuffle.memoryFraction=0.3 \
---files hdfs://gdmp/user/hive/hive-site.xml,hdfs://gdmp/user/hbase/hbase-site.xml  \
+--files hdfs://gyuj/user/hive/hive-site.xml,hdfs://gyuj/user/hbase/hbase-site.xml  \
 /opt/sspro/sparker-0.0.1.jar  \
 -sparker.name sparktest   \
 -sparker.enableHiveSupport true \
 -sparker.sql.params.yestoday  $yestoday \
 -sparker.log.params true \
--sparker.job.file.path hdfs://gdmp/user/gdtp/project/after_sales/${1}
+-sparker.job.file.path hdfs://gyuj/user/gddd/project/xxxx/${1}
 
 ```
 
