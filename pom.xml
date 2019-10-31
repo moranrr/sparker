@@ -15,7 +15,7 @@
 		<encoding>UTF-8</encoding>
         <scala.binary.version>2.11</scala.binary.version>
 		<scala.version>2.11.8</scala.version>
-		<spark.version>2.3.0</spark.version>
+		<spark.version>2.4.4</spark.version>
         <scope>provided</scope>
 	</properties>
 	
